@@ -5,10 +5,38 @@ require 'logger'
 
 begin
   require 'rubygems'
+  require 'bundler'
   require 'rake/gempackagetask'
 rescue Exception
   nil
 end
+
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+require 'rake'
+require 'jeweler'
+
+Jeweler::Tasks.new do |gem|
+  gem.name = "jira4r-jh"
+  gem.homepage = "http://xircles.rubyhaus.org/projects/jira4r"
+  gem.license = "Apache"
+  gem.summary = %Q{Clone of latest source from http://xircles.rubyhaus.org/projects/jira4r }
+  gem.description = %Q{the current version of jira4r is quite old. there is a newer version but there isn't a new gem for it so I am just releasing it}
+  gem.email = "jamiehollingworth@gmail.com"
+  gem.authors = ["James Stuart", "James Hollingworth"]
+
+  gem.add_runtime_dependency 'soap4r'
+  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.add_development_dependency 'jeweler'
+  gem.add_development_dependency 'bundler'
+end
+Jeweler::RubygemsDotOrgTasks.new
+
 
 gem 'soap4r'
 
@@ -22,16 +50,11 @@ desc "gets the wsdl and generates the classes"
 task :default => [:generate]
 
 
-
 desc "gets the wsdl files for JIRA services"
 task :getwsdl do
   versions().each { |version| 
     save(getWsdlFileName(version), get_file("jira.codehaus.org", "/rpc/soap/jirasoapservice-v#{version}?wsdl"))
   }
-end
-
-task :build_gem do
-  system("gem build jira4r.gemspec")
 end
 
 task :clean do
@@ -42,14 +65,6 @@ task :clean do
   unl("lib/jira4r/v2/jiraService.rb")
   unl("lib/jira4r/v2/jiraServiceDriver.rb")
   unl("lib/jira4r/v2/jiraServiceMappingRegistry.rb")
-end
-
-task :install_gem do
-  system("gem install *.gem")
-end  
-
-task :deploy_gem do
-  system("scp *.gem codehaus03:/home/projects/jira4r/snapshots.dist/distributions/")
 end
 
 desc "generate the wsdl"
