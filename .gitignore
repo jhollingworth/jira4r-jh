@@ -2,6 +2,7 @@ doc
 .bundle
 pkg
 .idea
+.idea/*
 *.gem
 
 
