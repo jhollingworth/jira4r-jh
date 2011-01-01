@@ -14,7 +14,8 @@ Gem::Specification.new do |s|
   s.email = %q{jamiehollingworth@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
-    "README.textile"
+    "README.textile",
+    "README.txt"
   ]
   s.files = [
     "Gemfile",
@@ -22,6 +23,7 @@ Gem::Specification.new do |s|
     "LICENSE",
     "NOTICE",
     "README.textile",
+    "README.txt",
     "Rakefile",
     "VERSION",
     "jira4r-jh.gemspec",
