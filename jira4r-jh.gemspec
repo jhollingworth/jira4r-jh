@@ -17,17 +17,15 @@ Gem::Specification.new do |s|
     "README.textile"
   ]
   s.files = [
-    ".idea/encodings.xml",
-    ".idea/jira4r.iml",
-    ".idea/misc.xml",
-    ".idea/modules.xml",
-    ".idea/vcs.xml",
-    ".idea/workspace.xml",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE",
     "NOTICE",
+    "README.textile",
     "Rakefile",
     "VERSION",
+    "jira4r-jh-0.4.0.gem",
+    "jira4r-jh.gemspec",
     "lib/jira4r/.DS_Store",
     "lib/jira4r/jira4r.rb",
     "lib/jira4r/jira_tool.rb",
