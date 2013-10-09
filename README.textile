@@ -1,23 +1,35 @@
 h1. jira4r
 
-The current gem version of jira4r (0.3.0) is ancient. There is a more up to date version here http://xircles.rubyhaus.org/projects/jira4r so I have just cloned it so I can create my own gem of the source (jira4r-jh). Once a more up to date version of jira4r get's released I will remove this one.
+The current gem version of jira4r (0.3.0) is out of date. There is a more up to date version "here":http://xircles.rubyhaus.org/projects/jira4r. 
+I have just cloned it to create my own gem of the source (jira4r-jh). Once a more up to date version of jira4r get's released I will remove this one.
 
 h1. Examples
 
+Detailed usage of the SOAP APIs can be found "here":https://docs.atlassian.com/rpc-jira-plugin/latest/com/atlassian/jira/rpc/soap/JiraSoapService.html
+The usage is fairly straightforward but here are few examples to get you started.
+
+
 h2. Login
-client = Jira4R::JiraTool.new(2,your_jira_url)
+
+bc.. client = Jira4R::JiraTool.new(2,your_jira_url) # 2 => jira soap api version, jira_url => base url
 client.login(jira_username, jira_password)
 
-h2. Get a Jira Issue
-
-client.getIssue(your_jira_issue)
 
 h2. WorkLogs
 
-worklog = Jira4R::V2::RemoteWorklog.new
+bc.. worklog = Jira4R::V2::RemoteWorklog.new
 worklog.startDate = JDate.today.to_s
 worklog.timeSpent = '1h'
-
 client.addWorklogAndAutoAdjustRemainingEstimate(your_jira_issue, worklog)
 
-client.getWorklogs(your_jira_issue)
+p. (Also see, *addWorklogAndRetainRemainingEstimate* and *addWorklogWithNewRemainingEstimate*)
+
+
+h2. Updating Issues with Special Fields
+
+p. If you use custom fields, you'll first need to create a "RemoteField":https://docs.atlassian.com/rpc-jira-plugin/latest/com/atlassian/jira/rpc/soap/beans/RemoteField.html object:
+
+bc.. remote_field = Jira4R::V2::RemoteFieldValue.new
+remote_field.id = "your_custom_field_id"
+remote_field.values = "new_value"
+client.updateIssue(your_jira_issue, [remote_field])
